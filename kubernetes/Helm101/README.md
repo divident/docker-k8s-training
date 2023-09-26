@@ -103,3 +103,21 @@ helm status mysql-1652869723
 Uninstalling the chart is as easy as calling ```helm uninstall``` with the chart name. You could also use the flag ```--keep-history``` if you want to get rid of the chart but keep the release history.
 
 Now that we have the basics out of the way, let's do a deep dive into Helm charts.
+
+## Customize helm chart
+
+You can check available values to change
+```
+helm show values bitnami/mysql
+```
+
+
+Upgrade installed chart with new values
+```
+helm install my-custom-name bitnami/mysql --set image.tag=latest --set auth.rootPassword=LetMeIn!
+```
+
+You can also use the `override.yaml` file if the number of values you change becomes large
+```
+helm install my-custom-name bitnami/mysql -f override.yaml 
+```

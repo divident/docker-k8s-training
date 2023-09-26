@@ -104,6 +104,7 @@ Events:            <none>
 
 In this way, we can conclude work on how the Labels and selectors work in POD and SERVICE scenarios. 
 
+
 # Exercices
 1. Create 2 pods with names nginx1,nginx2. All of them should have the label app=v1
 1. Change the labels of pod 'nginx2' to be app=v2

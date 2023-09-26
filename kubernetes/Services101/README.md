@@ -220,6 +220,38 @@ spec:
 ```
 
 One of the main differences between the LoadBalancer and the NodePort service types is that in the latter you get to choose your own load balancing layer. You are not bound to the cloud provider’s implementation
+## Green blue rollout
+
+Start wondeful application using `kubectl apply -f wonderful-deployment.yaml`
+
+The app has a Deployment with image httpd:alpine, but should be switched over to nginx:alpine .
+
+The switch should happen instantly. Meaning that from the moment of rollout, all new requests should hit the new image.
+
+Create a new Deployment wonderful-v2 which uses image nginx:alpine with 4 replicas. It's Pods should have labels app: wonderful and version: v2
+
+Once all new Pods are running, change the selector label of Service wonderful to version: v2
+
+Finally scale down Deployment wonderful-v1 to 0 replicas
+
+
+## Canary rollout
+
+Start wondeful application using `kubectl apply -f wonderful-canary.yaml`
+
+The app has a Deployment with image httpd:alpine , but should be switched over to nginx:alpine .
+
+The switch should not happen fast or automatically, but using the Canary approach:
+
+20% of requests should hit the new image
+80% of requests should hit the old image
+For this create a new Deployment wonderful-v2 which uses image nginx:alpine .
+
+The total amount of Pods of both Deployments combined should be 10.
+
+# Ingress
+Route traffic to different services based on URL
+https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/#create-an-ingress
 
 ## Exercises
 

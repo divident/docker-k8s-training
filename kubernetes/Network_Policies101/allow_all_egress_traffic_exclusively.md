@@ -4,8 +4,8 @@ Like we did on the ingress part, sometimes you want to exclusively allow all egr
 
 ## Steps
 ```
-git clone https://github.com/collabnix/kubelabs.git
-cd kubelabs/Network_Policies101/
+
+cd kubernetes/NetworkPolicies101/
 ```
 ```
 kubectl apply -f allow-egress.yaml

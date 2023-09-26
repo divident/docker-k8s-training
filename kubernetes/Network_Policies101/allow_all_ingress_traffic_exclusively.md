@@ -4,8 +4,8 @@ We may want to override any other NetworkPolicy that restricts traffic to your p
 
 ## Steps
 ```
-git clone https://github.com/collabnix/kubelabs.git
-cd kubelabs/Network_Policies101/
+
+cd kubernetes/NetworkPolicies101/
 ```
 Run the following to create a NetworkPolicy which allows traffic  from any pods in the network-policy-demo namespace.
 

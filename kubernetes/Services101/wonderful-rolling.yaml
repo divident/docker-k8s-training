@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wonderful
+  name: wonderful-v1
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: wonderful
+  strategy:
+    rollingUpdate:
+      maxSurge: 25% # maxSurge specifies the maximum number of pods the Deployment is allowed to create at one time
+      maxUnavailable: 25% # a description of the number of pods from that set that can be unavailable 
+                          # after the eviction, eviction means event when pods get signal to stop running
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wonderful
+    spec:
+      containers:
+      - image: httpd:alpine
+        name: httpd
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

@@ -6,22 +6,63 @@ Kubernetes has two types of objects that can be used to inject configuration dat
 - ConfigMaps
 
 We will explore both Secrets and ConfigMaps with a real-world situation:
+## ConfigMaps:
 
+ConfigMaps are similar to Secrets. They can be created in the same ways, and can be shared in the containers the same ways. The only big difference between them is the base64 encoding obfuscation. ConfigMaps are intended to non-sensitive data - configuration data - like config files and environment variables, and are a great way to create customized running services from generic container images.
+
+## Create a ConfigMap:
+
+ConfigMaps can be created the same ways Secrets are. A YAML representation of the ConfigMap can be written manually and loaded it into Kubernetes, or the kubectl create configmap command can be used to create it from the command line.
+
+Create a custom nginx file and we are going to create the configmap, which is present on the directory which is named as nginx-custom.conf
+
+### Create the configmaps
+Three options
+```
+    --from-env-file=[]:
+        Specify the path to a file to read lines of key=val pairs to create a configmap.
+
+    --from-file=[]:
+        Key file can be specified using its file path, in which case file basename will be used as configmap key, or
+        optionally with a key and file path, in which case the given key will be used.  Specifying a directory will
+        iterate each named file in the directory whose basename is a valid configmap key.
+
+    --from-literal=[]:
+        Specify a key and literal value to insert in configmap (i.e. mykey=somevalue)
+```
+
+```
+kubectl create configmap test --from-literal=KEY=VALUE --from-literal=OTHER=NEXT --dry-run=client -o yaml
+```
+
+Try creating new secret from env file like
+```
+VALUE_ONE=test
+VALUE_TWO=testtest
+```
+
+From file
+```
+kubectl create configmap nginx-config --from-file nginx-custom.conf --dry-run=client -o yaml
+```
 ## Secrets:
 
 Secrets are a Kubernetes object intended for storing a small amount of sensitive data. It is worth noting that Secrets are stored base64-encoded within Kubernetes, so they are not wildly secure. Make sure to have appropriate Role-base access controls (or RBAC) to protect access to secrets. These are a way store things that you do not want floating around in your code.
 
 ## Creating a Secret manually:
 
-first execute the script which is present on the directory script and craete the certs and keys 
+first execute the script which is present on the directory script and create the certs and keys 
 
 ```
+# generate cert files
+bash cets.sh
+
 kubectl create secret tls nginx-certs --cert=tls.crt --key=tls.key
 secret/nginx-certs created
 ```
 
 ```
-swapnasagars-MacBook-Pro:~ swapnasagar$ kubectl get secrets
+$ kubectl get secrets
 NAME                  TYPE                                  DATA   AGE
 default-token-xf2f4   kubernetes.io/service-account-token   3      3d23h
 nginx-certs           kubernetes.io/tls                     2      24s
@@ -30,7 +71,7 @@ nginx-certs           kubernetes.io/tls                     2      24s
 Now that the secret is created, use kubectl describe to see it.
 
 ```
-swapnasagars-MacBook-Pro:~ swapnasagar$ kubectl describe secret nginx-certs
+$ kubectl describe secret nginx-certs
 Name:         nginx-certs
 Namespace:    default
 Labels:       <none>
@@ -45,28 +86,6 @@ tls.key:  1704 bytes
 ```
 
 Note the Data field contains the key we created earlier, note the vaule what we assigned, it is not shown in the output and only you can see the size of the value.
-
-## ConfigMaps:
-
-ConfigMaps are similar to Secrets. They can be created in the same ways, and can be shared in the containers the same ways. The only big difference between them is the base64 encoding obfuscation. ConfigMaps are intended to non-sensitive data - configuration data - like config files and environment variables, and are a great way to create customized running services from generic container images.
-
-## Create a ConfigMap:
-
-ConfigMaps can be created the same ways Secrets are. A YAML representation of the ConfigMap can be written manually and loaded it into Kubernetes, or the kubectl create configmap command can be used to create it from the command line.
-
-Create a custom nginx file and we are going to create the configmap, which is present on the directory which is named as nginx-custom.conf
-
-### Create the configmaps
-
-```
-kubectl create configmap nginx-config --from-file nginx-custom.conf
-```
-
-View the new ConfigMap and read the data
-
-```
-kubectl get configmaps
-```
 
 ## To get the both secrets and configmaps
 
@@ -132,3 +151,15 @@ Testing your websites with 443 expose your deployment and test your set up.
 
 In this exercise, we learned how to create Kubernetes Secrets and ConfigMaps. We also learned how to use those Secrets and ConfigMaps. By volumemounts , we have also seen how it's easy to keep the configuration of individual instances of containers separate from the container image itself. By separating this configuration data, overhead is reduced to maintaining only a single image for a specific type of instance.
 
+## Exercises
+1. Create a ConfigMap that has two data fields FOO=bar BAR=foo
+1. Make these ConfigMaps available and create pod1 using config maps as environment variables.
+1. Check on pod1 if those environment variables are available
+    Expected result
+    ```
+    echo $FOO
+    # prints bar
+    ```
+1. Create pod2 and mount only BAR data field inside it as environment variable
+1. Create a secret with value password=LetMeIn!
+1. Create pod3 and mount secret as environment vairables and check if password is available

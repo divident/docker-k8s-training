@@ -4,8 +4,7 @@ An effective network security rule starts with denying all traffic by default un
 
 ## Steps
 ```
-git clone https://github.com/collabnix/kubelabs.git
-cd kubelabs/Network_Policies101/
+cd kubernetes/Network_Policies101/
 ```
 - We’ll use a new namespace for this guide. Run the following commands to create it and a plain nginx service listening on port 80.
 ```

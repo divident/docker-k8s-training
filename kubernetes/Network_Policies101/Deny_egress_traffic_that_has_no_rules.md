@@ -5,8 +5,7 @@ We’re doing the same thing here but on egress traffic. The following NetworkPo
 
 ## Steps
 ```
-git clone https://github.com/collabnix/kubelabs.git
-cd kubelabs/Network_Policies101/
+cd kubernetes/NetworkPolicies101/
 kubectl apply -f default-deny-egress.yaml
 ```
 ## Verify Access - Denied All Egress
@@ -19,10 +18,9 @@ We can see that this is the case by switching over to our “access” pod in th
 
  wget -q --timeout=5 google.com -O -
 
- [node1 ~]$  kubectl run --generator=run-pod/v1  --namespace=network-policy-demo access --rm -ti --image busybox /bin/sh
+ kubectl run --generator=run-pod/v1  --namespace=network-policy-demo access --rm -ti --image busybox /bin/sh
  If you don't see a command prompt, try pressing enter.
  / # wget -q --timeout=5 google.com -O -
  wget: bad address 'google.com'
- / #
 
  ```
