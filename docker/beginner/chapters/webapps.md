@@ -438,6 +438,21 @@ or
 ```bash
 $ docker rm -f myfirstapp
 ```
+### 2.3.5 Mounting local files
+This is useful for local development. It allows you to mount source files under a Docker container, which means you don't have to build an image every time you chain source files. Depending on your server configuration, changes will be reflected immediately.
+
+```
+docker run -p 8888:5000 --name myfirstapp --mount type=bind,source="$(pwd)"/templates,target=/usr/src/app/templates/ myfirstapp
+```
+
+Make some changes to `index.html` and refresh the page.
+
+Explore mounted file in container
+```
+docker exec -it myfirstapp sh
+```
+
+More details: https://docs.docker.com/storage/bind-mounts/
 
 ### 2.3.5 Dockerfile commands summary
 
