@@ -93,7 +93,7 @@ nginx-deployment-6dd86d77d-xnrqp   1/1     Running   0          3m44s
 Now let’s scale the Deployment to 4 replicas. We are going to use the kubectl scale command,
 followed by the deployment type, name and desired number of instances:
 ```
-Biradars-MacBook-Air-4:~ sangam$ kubectl scale deployments/nginx-deployment --replicas=4
+$ kubectl scale deployments/nginx-deployment --replicas=4
 deployment.extensions/nginx-deployment scaled
 ```
 
@@ -298,7 +298,7 @@ Events:
 The command notified the Deployment to use a different image for your app and initiated a rolling update. Check the status of the new Pods, and view the old one terminating with the get pods command:
 
 ```
-Biradars-MacBook-Air-4:~ sangam$ kubectl set image  deployments/nginx-deployment nginx=nginx:1.9.1
+$ kubectl set image  deployments/nginx-deployment nginx=nginx:1.9.1
 deployment.extensions/nginx-deployment image updated
 ```
 

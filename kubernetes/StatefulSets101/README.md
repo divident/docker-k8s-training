@@ -14,7 +14,10 @@ A Kubernetes Service acts as an abstraction layer. In a stateless application li
 
 # Deploying a Stateful Application Using Kubernetes Statefulset
 
-If you look at [web_stateful.yaml](https://github.com/collabnix/kubelabs/blob/master/StatefulSets101/web_stateful.yaml) file, you will find a snippet around how we are deploying a stateful application. For simplicity, are we using Nginx  as the pod image. The deployment is made up of 2 Nginx web servers; both of them are connected to a persistent volume. For example, look at web_stateful.yaml file under the current location.
+If you look at `web_stateful.yaml` file, you will find a snippet around how we are deploying a stateful application. For simplicity, are we using Nginx  as the pod image. The deployment is made up of 2 Nginx web servers; both of them are connected to a persistent volume. For example, look at web_stateful.yaml file under the current location.
+
+# Stable Storage 
+For each VolumeClaimTemplate entry defined in a StatefulSet, each Pod receives one PersistentVolumeClaim. In the nginx example above, each Pod receives a single PersistentVolume with a StorageClass of my-storage-class and 1 GiB of provisioned storage. If no StorageClass is specified, then the default StorageClass will be used. When a Pod is (re)scheduled onto a node, its volumeMounts mount the PersistentVolumes associated with its PersistentVolume Claims. Note that, the PersistentVolumes associated with the Pods' PersistentVolume Claims are not deleted when the Pods, or StatefulSet are deleted. This must be done manually.
 
 Before we start discussing the details of this definition, notice that the file actually contains two definitions: the storage class that the StatefulSet is using and the StatefulSet itself.
 
