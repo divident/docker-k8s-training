@@ -22,7 +22,7 @@ which are also available during the official [CKAD certification](https://docs.l
 1. [StatefulSets](StatefulSets101/README.md)
 1. [Jobs](Jobs101/README.md)
 1. [DaemonSet](DaemonSet101/README.md)
-1. [Secrets and ConfigMaps](SecertsConfigmaps101/README.md)
+1. [Secrets and ConfigMaps](SecretsConfigmaps101/README.md)
 1. [Network Policies](Network_Policies101/README.md)
 1. [Security](Security101/README.md)
 1. [Helm](Helm101/README.md)
