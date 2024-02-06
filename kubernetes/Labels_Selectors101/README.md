@@ -21,6 +21,17 @@ NAME        READY   STATUS    RESTARTS   AGE   LABELS
 mywebapp1   1/1     Running   0          10s   demo=kubelabs
 ```
 
+Updating lable via cli
+```
+kubectl label pods -l demo=kubelabs tier=fe
+```
+
+Using lables query
+
+```
+kubectl get pods -l 'demo in (kubelabs),tier in (fe)'
+```
+
 In the above example, we have created a pod with a name called mywebapp1 and has a label called demo = kubelabs, We can create a service and map the pod to it using the same labels, which can be referred as to selector in our service definition file as below. 
 
 ```
